@@ -94,7 +94,8 @@ if option == 'stocktwits':
         st.write(message['created_at'])
         st.write(message['body'])
 
-url = 'https://dashboard.heroku.com/apps/candle-pattern-app'
+
 if option == 'pattern':
+    url = 'https://dashboard.heroku.com/apps/candle-pattern-app'
     st.text('This option is not live it will be live once I get funding I have it set up but I dont have money for the software to make it live.')
     webbrowser.open_new_tab(url)
