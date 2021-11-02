@@ -20,7 +20,7 @@ api = tweepy.API(auth)
 #connection = psycopg2.connect(host = config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS, port='5432')
 #cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits','company info'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits','company info', 'pattern'), 1)
 
 st.header(option)
 
@@ -94,3 +94,7 @@ if option == 'stocktwits':
         st.write(message['created_at'])
         st.write(message['body'])
 
+url = 'http://127.0.0.1:5000/'
+if option == 'pattern':
+    st.text('This option is not live it will be live once I get funding I have it set up but I dont have money for the software to make it live.')
+    webbrowser.open_new_tab(url)
