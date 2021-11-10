@@ -12,15 +12,14 @@ import cufflinks as cf
 import webbrowser
 
 
-
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-#connection = psycopg2.connect(host = config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS, port='5432')
-#cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+connection = psycopg2.connect(host = 'localhost', database='etfdb', user='postgres', password='password', port='5432')
+cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits','company info'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'stocktwits', 'pattern','company info'), 1)
 
 st.header(option)
 
@@ -49,8 +48,8 @@ if option == 'company info':
 # url = 'http://127.0.0.1:5000/'
 # if st.sidebar.button('Candle Stick Screener'):
     #webbrowser.open_new_tab(url)
-    start_date = st.sidebar.date_input("Start date", datetime.date(2021, 1, 1))
-    end_date = st.sidebar.date_input("End date", datetime.date(2021, 10, 19))
+    start_date = st.sidebar.date_input("Start date", datetime.date(2021, 10, 1))
+    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 10))
 
 
 # Retrieving tickers data
@@ -73,10 +72,9 @@ if option == 'company info':
     st.header('**Ticker data**')
     st.write(tickerDf)
 
-# Bollinger bands
-    st.header('**Bollinger Bands**')
+# Stock Chart
+    st.header('**Stock Chart**')
     qf=cf.QuantFig(tickerDf,title='First Quant Figure',legend='top',name='GS')
-    qf.add_bollinger_bands()
     fig = qf.iplot(asFigure=True)
     st.plotly_chart(fig)
 
@@ -94,8 +92,8 @@ if option == 'stocktwits':
         st.write(message['created_at'])
         st.write(message['body'])
 
-
-#if option == 'pattern':
-    #url = 'https://dashboard.heroku.com/apps/candle-pattern-app'
-    #st.text('This option is not live it will be live once I get funding I have it set up but I dont have money for the software to make it live.')
-    #webbrowser.open_new_tab(url)
+        
+url = 'https://candle-pattern-app.herokuapp.com/'
+if option == 'pattern':
+    st.text('This option is not live it will be live once I get funding I have it set up but I dont have money for the software to make it live.')
+    webbrowser.open_new_tab(url)
