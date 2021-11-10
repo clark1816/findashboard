@@ -19,7 +19,7 @@ api = tweepy.API(auth)
 connection = psycopg2.connect(host = 'localhost', database='etfdb', user='postgres', password='password', port='5432')
 cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'wallstreetbets', 'stocktwits', 'pattern','company info'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info'), 1)
 
 st.header(option)
 
