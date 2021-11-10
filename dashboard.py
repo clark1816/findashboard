@@ -92,5 +92,4 @@ if option == 'stocktwits':
         
 url = 'https://candle-pattern-app.herokuapp.com/'
 if option == 'pattern':
-    st.text('This option is not live it will be live once I get funding I have it set up but I dont have money for the software to make it live.')
-    webbrowser.open_new_tab(url)
+    st.write("check out this [link](https://candle-pattern-app.herokuapp.com/)")
