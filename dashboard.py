@@ -16,7 +16,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-connection = psycopg2.connect(host = 'localhost', database='etfdb', user='postgres', password='password', port='5432')
+connection = psycopg2.connect(host = config.DB_HOST, database=config.DB_NAME, user=config.DB_USER, password=config.DB_PASS, port = '5432')
 cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info'), 1)
