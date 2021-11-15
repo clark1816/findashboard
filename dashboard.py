@@ -16,7 +16,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets'), 1)
 
 st.header(option)
 
@@ -38,6 +38,18 @@ if option == 'twitter':
                         st.write(tweet.text)
                         st.image(f"https://finviz.com/chart.ashx?t={symbol}")
 
+if option == 'wallstreetbets':
+    st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
+    st.write('$SNDL 22 Mentions')
+    st.write('$GGPI 15 Mentions')
+    st.write('$PSFE 11 Mentions')
+    st.subheader('This data was webscraped using python last updated 11/15/21')
+
+if option == 'S&P 500 Stocks':
+    st.subheader('Stocks in the S&P 500 that are breaking out:')
+    st.write('$Stock')
+    st.subheader('Stocks in the S&P 500 that are consolidating:')
+    st.write('$Stock')
 if option == 'company info':
     
 # Sidebar
@@ -45,9 +57,8 @@ if option == 'company info':
 # url = 'http://127.0.0.1:5000/'
 # if st.sidebar.button('Candle Stick Screener'):
     #webbrowser.open_new_tab(url)
-    start_date = st.sidebar.date_input("Start date", datetime.date(2021, 10, 1))
-    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 10))
-
+    start_date = st.sidebar.date_input("Start date", datetime.date(2021, 10, 15))
+    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 15))
 
 # Retrieving tickers data
     ticker_list = pd.read_csv('https://raw.githubusercontent.com/shilewenuw/get_all_tickers/master/get_all_tickers/tickers.csv')
