@@ -46,7 +46,7 @@ if option == 'wallstreetbets':
     st.write('2. GME')
     st.write('3. SNDL')
     st.write('4. WISH')
-    st.write('5. CLOV')
+    st.write('5. LCID')
 
 if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
