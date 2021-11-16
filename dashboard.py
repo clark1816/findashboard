@@ -16,7 +16,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks'), 4)
 
 st.header(option)
 
@@ -40,16 +40,21 @@ if option == 'twitter':
 
 if option == 'wallstreetbets':
     st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
-    st.write('$SNDL 22 Mentions')
-    st.write('$GGPI 15 Mentions')
-    st.write('$PSFE 11 Mentions')
-    st.subheader('This data was webscraped using python last updated 11/15/21')
+    st.write('GGPI Most Mentions')
+    st.subheader('trending stocks in r/wallstreetbets over the past 14 days.')
+    st.write('1. TSLA')
+    st.write('2. GME')
+    st.write('3. SNDL')
+    st.write('4. WISH')
+    st.write('5. CLOV')
 
-if option == 'S&P 500 Stocks':
+if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
-    st.write('$Stock')
+    st.write('AEE is breaking out')
     st.subheader('Stocks in the S&P 500 that are consolidating:')
-    st.write('$Stock')
+    st.write('ARE is consolidating')
+    st.write('MMM is consolidating')
+
 if option == 'company info':
     
 # Sidebar
