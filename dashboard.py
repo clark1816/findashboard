@@ -50,7 +50,7 @@ if option == 'wallstreetbets':
 
 if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
-    st.write('AEE is breaking out')
+    st.write('No stocks are  breaking out')
     st.subheader('Stocks in the S&P 500 that are consolidating:')
     st.write('ARE is consolidating')
     st.write('MMM is consolidating')
