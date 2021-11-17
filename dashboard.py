@@ -10,7 +10,7 @@ import datetime
 import yfinance as yf
 import cufflinks as cf
 import webbrowser
-
+from web3 import Web3
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
