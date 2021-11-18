@@ -155,7 +155,7 @@ if option == 'nftdashboard':
         
         r = requests.get('https://api.opensea.io/api/v1/events', params=params)
 
-        events = r.json()
+        #events = r.json()
         event_list = []
         for event in events['asset_events']:
             if event_type == 'offer_entered':
