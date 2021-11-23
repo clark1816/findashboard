@@ -41,13 +41,13 @@ if option == 'twitter':
 
 if option == 'wallstreetbets':
     st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
-    st.write('GGPI Most Mentions')
+    st.write('TSLA & GME Most Mentions, WISH 3rd most')
     st.subheader('trending stocks in r/wallstreetbets over the past 14 days.')
-    st.write('1. TSLA')
-    st.write('2. GME')
+    st.write('1. WISH')
+    st.write('2. TSLA')
     st.write('3. SNDL')
-    st.write('4. WISH')
-    st.write('5. LCID')
+    st.write('4. GME')
+    st.write('5. CLOV')
 
 if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
