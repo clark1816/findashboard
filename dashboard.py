@@ -136,28 +136,7 @@ if option == 'nftdashboard':
             st.image(svg)
         elif asset['image_url']:
             st.image(asset['image_url'])
-
-
-    if endpoint == 'Events':
-        st.write('I accidentaly broke one of the rules of the OpenSea Events API so this feature is down till they unban RMUs IP address from the site')
-
-    if endpoint == 'Assets':
-        st.sidebar.header('Filters')
-        owner = st.sidebar.text_input("Owner")
-        collection = st.sidebar.text_input("Collection")
-        params = {'owner': owner}
-        if collection:
-            params['collection'] = collection
-
-        r = requests.get('https://api.opensea.io/api/v1/assets', params=params)
-
-        assets = r.json()['assets']
-        for asset in assets:                
-            render_asset(asset)
-
-        st.subheader("Raw JSON Data")
-        st.write(r.json())
-
+            
     if endpoint == 'Rarity':
         with open('assets.json') as f:
             data = json.loads(f.read())
