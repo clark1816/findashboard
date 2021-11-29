@@ -17,7 +17,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 4)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
 
 st.header(option)
 
@@ -113,7 +113,7 @@ if option == 'pattern':
     
 if option == 'nftdashboard':
     st.sidebar.header("Endpoints")
-    endpoint_choices = ['Assets', 'Events', 'Rarity']
+    endpoint_choices = ['Assets', 'Rarity']
     endpoint = st.sidebar.selectbox("Choose an Endpoint", endpoint_choices)
 
     st.title(f"OpenSea API Explorer - {endpoint}")
