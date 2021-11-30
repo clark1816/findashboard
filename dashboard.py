@@ -12,13 +12,13 @@ import cufflinks as cf
 import webbrowser
 from web3 import Web3
 import json
-from pygooglenews import GoogleNews
+
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('news', 'twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
 st.header(option)
 
 if option == 'twitter':
@@ -189,8 +189,3 @@ if option == 'nftdashboard':
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
 
-if option == 'news':
-    gn = GoogleNews()
-    business = gn.topic_headlines('business')
-    for item in business['entries']:
-        st.write(item['title'])
