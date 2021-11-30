@@ -68,11 +68,8 @@ if option == 'company info':
     
 # Sidebar
     st.sidebar.subheader('company info')
-# url = 'http://127.0.0.1:5000/'
-# if st.sidebar.button('Candle Stick Screener'):
-    #webbrowser.open_new_tab(url)
     start_date = st.sidebar.date_input("Start date", datetime.date(2021, 10, 15))
-    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 15))
+    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 30))
 
 # Retrieving tickers data
     ticker_list = pd.read_csv('https://raw.githubusercontent.com/shilewenuw/get_all_tickers/master/get_all_tickers/tickers.csv')
