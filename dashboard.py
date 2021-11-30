@@ -18,7 +18,8 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 4)
+
 st.header(option)
 
 if option == 'twitter':
@@ -108,7 +109,8 @@ url = 'https://candle-pattern-app.herokuapp.com/'
 if option == 'pattern':
     st.write("check out this [link](https://candle-pattern-app.herokuapp.com/)")
     
-
+if option == 'nftdashboard':
+    st.sidebar.header("Endpoints")
     endpoint_choices = ['Assets', 'Rarity']
     endpoint = st.sidebar.selectbox("Choose an Endpoint", endpoint_choices)
 
@@ -183,4 +185,5 @@ if option == 'pattern':
                 st.subheader(f"{len(asset['traits'])} Traits")
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
+
 
