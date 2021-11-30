@@ -10,7 +10,7 @@ import datetime
 import yfinance as yf
 import cufflinks as cf
 import webbrowser
-from web3 import Web3
+
 import json
 
 
