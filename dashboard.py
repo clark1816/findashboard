@@ -12,13 +12,20 @@ import cufflinks as cf
 import webbrowser
 from web3 import Web3
 import json
+<<<<<<< HEAD
 from pygooglenews import GoogleNews
+=======
+>>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
+<<<<<<< HEAD
 option = st.sidebar.selectbox("Which Dashboard?", ('news', 'twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 4)
+=======
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
+>>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
 
 st.header(option)
 
@@ -42,20 +49,20 @@ if option == 'twitter':
 
 if option == 'wallstreetbets':
     st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
-    st.write('GGPI Most Mentions')
+    st.write('TSLA & GME Most Mentions, WISH 3rd most')
     st.subheader('trending stocks in r/wallstreetbets over the past 14 days.')
-    st.write('1. TSLA')
-    st.write('2. GME')
+    st.write('1. WISH')
+    st.write('2. TSLA')
     st.write('3. SNDL')
-    st.write('4. WISH')
-    st.write('5. LCID')
+    st.write('4. GME')
+    st.write('5. CLOV')
 
 if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
     st.write('No stocks are  breaking out')
     st.subheader('Stocks in the S&P 500 that are consolidating:')
-    st.write('ARE is consolidating')
-    st.write('MMM is consolidating')
+    st.write('MMM is consolidating, ABBV is consolidating, ARE is consolidating, GOOGL is consolidating, AME is consolidating, BDX is consolidating')
+    
 
 if option == 'company info':
     
@@ -114,7 +121,11 @@ if option == 'pattern':
     
 if option == 'nftdashboard':
     st.sidebar.header("Endpoints")
+<<<<<<< HEAD
     endpoint_choices = ['Assets', 'Events', 'Rarity']
+=======
+    endpoint_choices = ['Assets', 'Rarity']
+>>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
     endpoint = st.sidebar.selectbox("Choose an Endpoint", endpoint_choices)
 
     st.title(f"OpenSea API Explorer - {endpoint}")
@@ -140,39 +151,7 @@ if option == 'nftdashboard':
 
 
     if endpoint == 'Events':
-        collection = st.sidebar.text_input("Collection")
-        asset_contract_address = st.sidebar.text_input("Contract Address")
-        token_id = st.sidebar.text_input("Token ID")
-        event_type = st.sidebar.selectbox("Event Type", ['offer_entered', 'cancelled', 'bid_withdrawn', 'transfer', 'approve'])
-        params = {}
-        if collection:
-            params['collection_slug'] = collection
-        if asset_contract_address:
-            params['asset_contract_address'] = asset_contract_address
-        if token_id:
-            params['token_id'] = token_id
-        if event_type:
-            params['event_type'] = event_type
-        
-        r = requests.get('https://api.opensea.io/api/v1/events', params=params)
-
-        events = r.json()
-        event_list = []
-        for event in events['asset_events']:
-            if event_type == 'offer_entered':
-                if event['bid_amount']:
-                    bid_amount = Web3.fromWei(int(event['bid_amount']), 'ether')
-                if event['from_account']['user']:
-                    bidder = event['from_account']['user']['username']
-                else:
-                    bidder = event['from_account']['address']
-
-                event_list.append([event['created_date'], bidder, float(bid_amount), event['asset']['collection']['name'], event['asset']['token_id']])
-
-        df = pd.DataFrame(event_list, columns=['time', 'bidder', 'bid_amount', 'collection', 'token_id'])
-        st.write(df)
-        
-        st.write(events)
+        st.write('I accidentaly broke one of the rules of the OpenSea Events API so this feature is down till they unban RMUs IP address from the site')
 
     if endpoint == 'Assets':
         st.sidebar.header('Filters')
@@ -220,9 +199,12 @@ if option == 'nftdashboard':
                 st.subheader(f"{len(asset['traits'])} Traits")
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
+<<<<<<< HEAD
 
 if option == 'news':
     gn = GoogleNews()
     business = gn.topic_headlines('business')
     for item in business['entries']:
         st.write(item['title'])
+=======
+>>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
