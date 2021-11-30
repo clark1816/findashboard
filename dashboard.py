@@ -12,21 +12,13 @@ import cufflinks as cf
 import webbrowser
 from web3 import Web3
 import json
-<<<<<<< HEAD
 from pygooglenews import GoogleNews
-=======
->>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-<<<<<<< HEAD
-option = st.sidebar.selectbox("Which Dashboard?", ('news', 'twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 4)
-=======
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
->>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
-
+option = st.sidebar.selectbox("Which Dashboard?", ('news', 'twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
 st.header(option)
 
 if option == 'twitter':
@@ -196,12 +188,9 @@ if option == 'nftdashboard':
                 st.subheader(f"{len(asset['traits'])} Traits")
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
-<<<<<<< HEAD
 
 if option == 'news':
     gn = GoogleNews()
     business = gn.topic_headlines('business')
     for item in business['entries']:
         st.write(item['title'])
-=======
->>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
