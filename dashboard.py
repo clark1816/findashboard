@@ -108,13 +108,8 @@ url = 'https://candle-pattern-app.herokuapp.com/'
 if option == 'pattern':
     st.write("check out this [link](https://candle-pattern-app.herokuapp.com/)")
     
-if option == 'nftdashboard':
-    st.sidebar.header("Endpoints")
-<<<<<<< HEAD
-    endpoint_choices = ['Assets', 'Events', 'Rarity']
-=======
+
     endpoint_choices = ['Assets', 'Rarity']
->>>>>>> 5a1267ec25551bb84462cb1085712ca4c0378665
     endpoint = st.sidebar.selectbox("Choose an Endpoint", endpoint_choices)
 
     st.title(f"OpenSea API Explorer - {endpoint}")
