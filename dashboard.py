@@ -188,18 +188,23 @@ if option == 'nftdashboard':
                     
 if option == 'news':
     session = HTMLSession()
-    st.header('current news headline from google business')
     url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB?gl=US&hl=en-US&ceid=US:en'
     r = session.get(url)
-    #r.html.render(sleep = 1, scrolldown = 5)
     articles = r.html.find('article')
+    newslist = []
+
     for item in articles:
         try:
             newsitem = item.find('h3', first = True)
-            title = newsitem.text
-            link = newsitem.absolute_links
-            st.write(title, link)
+            newsarticle = {
+            'title' : newsitem.text,
+            'link' : newsitem.absolute_links
+            }
+            newslist.append(newsarticle)
         except:
             pass
+
+    st.write(newslist)
+   
 
 
