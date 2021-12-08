@@ -10,15 +10,21 @@ import datetime
 import yfinance as yf
 import cufflinks as cf
 import webbrowser
-from requests_html import HTMLSession
+from web3 import Web3
 import json
+import SessionState
+from requests_html import HTMLSession
+session = HTMLSession()
 
+#define session state
+session_state = SessionState.get(page_number = 1)
+prev, _ ,next = st.columns([1, 25, 1])
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('news','twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
+option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 4)
 
 st.header(option)
 
@@ -185,26 +191,36 @@ if option == 'nftdashboard':
                 st.subheader(f"{len(asset['traits'])} Traits")
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
-                    
+
 if option == 'news':
-    session = HTMLSession()
+    st.header('current news headline from google business')
     url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB?gl=US&hl=en-US&ceid=US:en'
     r = session.get(url)
+    #r.html.render(sleep = 1, scrolldown = 5)
     articles = r.html.find('article')
-    newslist = []
+    N = 25
+    ticket_list = articles
 
+    last_page = len(ticket_list) // N
+    if (last_page * N) < len(ticket_list):
+        last_page += 1
+
+    start = (session_state.page_number-1)*N
+    end = min(start+N, len(ticket_list))
+    ticket_list = ticket_list[start:end]
+
+    if next.button('Next'):
+        if session_state.page_number < last_page:
+            session_state.page_number += 1
+
+    if prev.button('Previous'):
+        if session_state.page_number > 1:
+            session_state.page_number -= 1
     for item in articles:
         try:
             newsitem = item.find('h3', first = True)
-            newsarticle = {
-            'title' : newsitem.text,
-            'link' : newsitem.absolute_links
-            }
-            newslist.append(newsarticle)
+            title = newsitem.text
+            link = newsitem.absolute_links
+            st.write(title, link)
         except:
             pass
-
-    st.write(newslist)
-   
-
-
