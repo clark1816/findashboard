@@ -10,16 +10,15 @@ import datetime
 import yfinance as yf
 import cufflinks as cf
 import webbrowser
-from web3 import Web3
-import json
 from requests_html import HTMLSession
-session = HTMLSession()
+import json
+
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
+option = st.sidebar.selectbox("Which Dashboard?", ('news','twitter', 'stocktwits', 'pattern','company info','wallstreetbets','s&p500stocks', 'nftdashboard'), 0)
 
 st.header(option)
 
@@ -186,8 +185,9 @@ if option == 'nftdashboard':
                 st.subheader(f"{len(asset['traits'])} Traits")
                 for trait in asset['traits']:
                     st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
-
+                    
 if option == 'news':
+    session = HTMLSession()
     st.header('current news headline from google business')
     url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtVnVHZ0pWVXlnQVAB?gl=US&hl=en-US&ceid=US:en'
     r = session.get(url)
@@ -201,3 +201,4 @@ if option == 'news':
             st.write(title, link)
         except:
             pass
+
