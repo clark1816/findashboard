@@ -147,7 +147,7 @@ if option == 'nftdashboard':
         if collection:
             params['collection'] = collection
 
-        r = requests.get('https://api.opensea.io/api/v1/assets', params=params)
+        r = requests.get('https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20', params=params)
 
         assets = r.json()['assets']
         for asset in assets:                
