@@ -147,14 +147,9 @@ if option == 'nftdashboard':
         if collection:
             params['collection'] = collection
 
-        r = requests.get('https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20', params=params)
-        
-        assets = r.json()['assets']
-        for asset in assets:                
-            render_asset(asset)
-
-        st.subheader("Raw JSON Data")
-        st.write(r.json())
+        url = "https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20"
+        response = requests.request("GET", url)
+        st.write(response.text)
 
     if endpoint == 'Rarity':
         with open('assets.json') as f:
