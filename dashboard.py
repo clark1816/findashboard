@@ -40,7 +40,7 @@ if option == 'twitter':
                         st.write(tweet.text)
                         st.image(f"https://finviz.com/chart.ashx?t={symbol}")
 
-if option == 'wallstreetbets':
+#if option == 'wallstreetbets':
     st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
     st.write('GME')
     st.subheader('trending stocks in r/wallstreetbets over the past 14 days.')
@@ -50,7 +50,7 @@ if option == 'wallstreetbets':
     st.write('4. TSLA')
     st.write('5. PHIL')
 
-if option == 's&p500stocks':
+#if option == 's&p500stocks':
     st.subheader('Stocks in the S&P 500 that are breaking out:')
     st.write('No stocks are  breaking out')
     st.subheader('Stocks in the S&P 500 that are consolidating:')
