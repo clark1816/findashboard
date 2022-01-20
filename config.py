@@ -4,6 +4,7 @@ TWITTER_ACCESS_TOKEN = '2317908458-HSCBbCubKwtOgw2kAaDQeHzJjPX98hqmqOzlvdD'
 TWITTER_ACCESS_TOKEN_SECRET = 'TJOHkcf7iUtyFwqXVj056AK8KgQRTuWuJIW2VQzrYk8VN'
 
 TWITTER_USERNAMES = [
+    '1PennyStocks',
     'traderstewie',
     'the_chart_life',
     'canuck2usa',
