@@ -61,8 +61,8 @@ if option == 'company info':
     
 # Sidebar
     st.sidebar.subheader('company info')
-    start_date = st.sidebar.date_input("Start date", datetime.date(2021, 10, 15))
-    end_date = st.sidebar.date_input("End date", datetime.date(2021, 11, 30))
+    start_date = st.sidebar.date_input("Start date", datetime.date(2022, 1, 1))
+    end_date = st.sidebar.date_input("End date", datetime.date(2022, 8, 8))
 
 # Retrieving tickers data
     ticker_list = pd.read_csv('https://raw.githubusercontent.com/shilewenuw/get_all_tickers/master/get_all_tickers/tickers.csv')
