@@ -152,7 +152,7 @@ if option == 'nftdashboard':
         st.write(response.text)
 
     if endpoint == 'Rarity':
-        with open('assets.json') as f:
+        with open('_metadata.json') as f:
             data = json.loads(f.read())
             asset_rarities = []
 
