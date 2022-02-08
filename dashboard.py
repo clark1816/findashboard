@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
-import tweepy
+#import tweepy
 import config 
 import psycopg2, psycopg2.extras
 import plotly.graph_objects as go
@@ -18,7 +18,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('news','twitter', 'stocktwits', 'pattern','company info'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('news', 'stocktwits', 'pattern','company info'), 1)
 
 st.header(option)
 
