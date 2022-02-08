@@ -156,7 +156,7 @@ if option == 'nftdashboard':
             data = json.loads(f.read())
             asset_rarities = []
 
-            for asset in data['assets']:
+            for asset in data['_metadata']:
                 asset_rarity = 1
 
                 for trait in asset['traits']:
