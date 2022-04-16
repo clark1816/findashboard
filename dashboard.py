@@ -18,7 +18,7 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('news','twitter', 'stocktwits', 'pattern','company info', 'nftdashboard'), 1)
+option = st.sidebar.selectbox("Which Dashboard?", ('news','twitter', 'stocktwits', 'pattern','company info'), 1)
 
 st.header(option)
 
@@ -39,23 +39,6 @@ if option == 'twitter':
                         st.write(symbol)
                         st.write(tweet.text)
                         st.image(f"https://finviz.com/chart.ashx?t={symbol}")
-
-if option == 'wallstreetbets':
-    st.subheader('trending stocks in r/wallstreetbets over the past 4 days.')
-    st.write('GME')
-    st.subheader('trending stocks in r/wallstreetbets over the past 14 days.')
-    st.write('1. WISH')
-    st.write('2. GME')
-    st.write('3. DOCU')
-    st.write('4. TSLA')
-    st.write('5. PHIL')
-
-if option == 's&p500stocks':
-    st.subheader('Stocks in the S&P 500 that are breaking out:')
-    st.write('No stocks are  breaking out')
-    st.subheader('Stocks in the S&P 500 that are consolidating:')
-    st.write('MMM is consolidating, ABBV is consolidating, ARE is consolidating, GOOGL is consolidating, AME is consolidating, BDX is consolidating')
-    
 
 if option == 'company info':
     
@@ -108,79 +91,7 @@ if option == 'stocktwits':
 url = 'https://candle-pattern-app.herokuapp.com/'
 if option == 'pattern':
     st.write("check out this [link](https://candle-pattern-app.herokuapp.com/)")
-    
-if option == 'nftdashboard':
-    st.sidebar.header("Endpoints")
-    endpoint_choices = ['Assets', 'Rarity']
-    endpoint = st.sidebar.selectbox("Choose an Endpoint", endpoint_choices)
-
-    st.title(f"OpenSea API Explorer - {endpoint}")
-
-    def render_asset(asset):
-        if asset['name'] is not None:
-            st.subheader(asset['name'])
-        else:
-            st.subheader(f"{asset['collection']['name']} #{asset['token_id']}")
-
-        if asset['description'] is not None:
-            st.write(asset['description'])
-        else:
-            st.write(asset['collection']['description'])
-
-        if asset['image_url'].endswith('mp4') or asset['image_url'].endswith('mov'):
-            st.video(asset['image_url'])
-        elif asset['image_url'].endswith('svg'):
-            svg = requests.get(asset['image_url']).content.decode()
-            st.image(svg)
-        elif asset['image_url']:
-            st.image(asset['image_url'])
-
-
-    if endpoint == 'Events':
-        st.write('I accidentaly broke one of the rules of the OpenSea Events API so this feature is down till they unban RMUs IP address from the site')
-
-    if endpoint == 'Assets':
-        st.sidebar.header('Filters')
-        owner = st.sidebar.text_input("Owner")
-        collection = st.sidebar.text_input("Collection")
-        params = {'owner': owner}
-        if collection:
-            params['collection'] = collection
-
-        url = "https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20"
-        response = requests.request("GET", url)
-        st.write(response.text)
-
-    if endpoint == 'Rarity':
-        with open('_metadata.json') as f:
-            data = json.loads(f.read())
-            asset_rarities = []
-
-            for asset in data['_metadata']:
-                asset_rarity = 1
-
-                for trait in asset['traits']:
-                    trait_rarity = trait['trait_count'] / 8888
-                    asset_rarity *= trait_rarity
-
-                asset_rarities.append({
-                    'token_id': asset['token_id'],
-                    'name': f"Wanderers {asset['token_id']}",
-                    'description': asset['description'],
-                    'rarity': asset_rarity,
-                    'traits': asset['traits'],
-                    'image_url': asset['image_url'],
-                    'collection': asset['collection']
-                })
-
-            assets_sorted = sorted(asset_rarities, key=lambda asset: asset['rarity']) 
-
-            for asset in assets_sorted[:20]:
-                render_asset(asset)
-                st.subheader(f"{len(asset['traits'])} Traits")
-                for trait in asset['traits']:
-                    st.write(f"{trait['trait_type']} - {trait['value']} - {trait['trait_count']} have this")
-                    
+                        
 if option == 'news':
     session = HTMLSession()
     st.header('current news headline from google business')
