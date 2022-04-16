@@ -106,9 +106,6 @@ if option == 'news':
             links = newsitem.absolute_links
             st.write(title)
             #st.write(links)
-            newsitems = item.find('href', first = True)
-            linkss = newitems.text
-            st.write(linkss)
         except:
             pass
 
