@@ -104,7 +104,7 @@ if option == 'news':
             newsitem = item.find('h3', first = True)
             title = newsitem.text
             links = newsitem.absolute_links
-            st.write(title)
+            st.write(title "[link]url")
             #st.write(links)
         except:
             pass
