@@ -106,6 +106,7 @@ if option == 'news':
             links = newsitem.absolute_links
             st.write(title)
             st.write(links)
+            st.write([link](links))
         except:
             pass
 
