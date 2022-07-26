@@ -13,7 +13,7 @@ import webbrowser
 from requests_html import HTMLSession
 import json
 #from pygooglenews import GoogleNews
-
+session = HTMLSession()
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
@@ -256,4 +256,3 @@ if option == 'News':
                 st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
-
