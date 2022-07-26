@@ -16,4 +16,4 @@ yfinance==0.1.63
 cufflinks==0.17.3
 web3==5.24.0
 pygooglenews==0.1.2
-protobuf~=3.19.0
+
