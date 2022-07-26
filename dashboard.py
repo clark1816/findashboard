@@ -12,7 +12,7 @@ import cufflinks as cf
 import webbrowser
 from requests_html import HTMLSession
 import json
-from pygooglenews import GoogleNews
+
 
 
 auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET)
