@@ -105,7 +105,7 @@ if option == 'news':
             title = newsitem.text
             links = newsitem.absolute_links
             st.write(title)
-            st.write("click here to read more. [link](url)")
+            st.write("click[link](url)")
         except:
             pass
 
