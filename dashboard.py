@@ -95,7 +95,7 @@ if option == 'pattern':
                         
 
 if option == 'News':
-    news_option = st.sidebar.selectbox("What Type of News?", ('Business', 'Technology', 'Covid','Russo-Ukrainian War','Sports', 'Health','World News', 'Entertainment'), 0)
+    news_option = st.sidebar.selectbox("What Type of News?", ('Business', 'Technology', 'Covid','Russo-Ukrainian War','Sports', 'Health','World News','US News', 'Entertainment'), 0)
 
     if news_option == 'Business':
         st.title(news_option)
@@ -116,22 +116,6 @@ if option == 'News':
     if news_option == 'Technology':
         st.title(news_option)
         url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US%3Aen'
-        r = session.get(url)
-        articles = r.html.find('article')
-        for item in articles:
-            try:
-                newsitem = item.find('h3', first = True)
-                title = newsitem.text
-                link = newsitem.absolute_links
-                st.write(title)
-                text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
-            except:
-                pass
-
-    if news_option == 'Covid':
-        st.title(news_option)
-        url = 'https://news.google.com/topics/CAAqIggKIhxDQkFTRHdvSkwyMHZNREZqY0hsNUVnSmxiaWdBUAE?hl=en-US&gl=US&ceid=US%3Aen'
         r = session.get(url)
         articles = r.html.find('article')
         for item in articles:
@@ -241,7 +225,7 @@ if option == 'News':
             except:
                 pass
 
-    if news_option == 'Entertainment News':
+    if news_option == 'Entertainment':
         st.title(news_option)
         url = 'https://news.google.com/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNREpxYW5RU0FtVnVHZ0pWVXlnQVAB?hl=en-US&gl=US&ceid=US%3Aen'
         r = session.get(url)
