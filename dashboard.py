@@ -248,6 +248,7 @@ if option == 'Update WallStreetBetsDB':
     
 if option == 'wallstreetbets':
     num_days = st.sidebar.slider('Number of days', 1, 30, 30)
+    st.subheader("This pages shows you how many times each of the listed stocks is mentioned in r/wallstreetbets")
     
     cursor.execute("""
         SELECT COUNT(*) AS num_mentions, symbol
