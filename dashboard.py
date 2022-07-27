@@ -9,9 +9,9 @@ import plotly.graph_objects as go
 import datetime
 import yfinance as yf
 import cufflinks as cf
-import webbrowser
 from requests_html import HTMLSession
-import json
+import psycopg2, psycopg2.extras
+from psaw import PushshiftAPI
 #from pygooglenews import GoogleNews
 session = HTMLSession()
 
@@ -19,7 +19,10 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('News','twitter', 'stocktwits', 'pattern','company info'), 0)
+connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_HOST"], database=st.secrets["DB_NAME"], user=st.secrets["DB_USER"], password=st.secrets["DB_PASS"])
+cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+option = st.sidebar.selectbox("Which Dashboard?", ('wallstreetbets','News','twitter', 'stocktwits', 'pattern','company info'), 0)
 
 st.header(option)
 
@@ -109,7 +112,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -125,7 +128,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -141,7 +144,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
         
@@ -157,7 +160,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -173,7 +176,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -189,7 +192,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -205,7 +208,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -221,7 +224,7 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
 
@@ -237,6 +240,43 @@ if option == 'News':
                 link = newsitem.absolute_links
                 st.write(title)
                 text='check out this [link]({link})'.format(link=link)
-                st.markdown(link,unsafe_allow_html=True)
+                #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
+if option == 'Update WallStreetBetsDB':
+    st.write("updating db")
+    
+if option == 'wallstreetbets':
+    num_days = st.sidebar.slider('Number of days', 1, 30, 3)
+    
+    cursor.execute("""
+        SELECT COUNT(*) AS num_mentions, symbol
+        FROM mention JOIN stock ON stock.id = mention.stock_id
+        WHERE date(dt) > current_date - interval '%s day'
+        GROUP BY stock_id, symbol   
+        HAVING COUNT(symbol) > 10
+        ORDER BY num_mentions DESC
+    """, (num_days,))
+
+    counts = cursor.fetchall()
+    for count in counts:
+        st.write(count)
+    
+    cursor.execute("""
+        SELECT symbol, message, url, dt
+        FROM mention JOIN stock ON stock.id = mention.stock_id
+        ORDER BY dt DESC
+        LIMIT 100
+    """)
+
+    mentions = cursor.fetchall()
+    for mention in mentions:
+        st.text(mention['dt'])
+        st.text(mention['symbol'])
+        st.text(mention['message'])
+        st.text(mention['url'])
+        #st.text(mention['username'])
+
+    rows = cursor.fetchall()
+
+    st.write(rows)
