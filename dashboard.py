@@ -247,7 +247,7 @@ if option == 'Update WallStreetBetsDB':
     st.write("updating db")
     
 if option == 'wallstreetbets':
-    num_days = st.sidebar.slider('Number of days', 1, 30, 3)
+    num_days = st.sidebar.slider('Number of days', 1, 30, 30)
     
     cursor.execute("""
         SELECT COUNT(*) AS num_mentions, symbol
