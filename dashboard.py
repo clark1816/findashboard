@@ -11,7 +11,7 @@ import yfinance as yf
 import cufflinks as cf
 from requests_html import HTMLSession
 import psycopg2, psycopg2.extras
-from psaw import PushshiftAPI
+
 #from pygooglenews import GoogleNews
 session = HTMLSession()
 
