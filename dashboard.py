@@ -255,7 +255,7 @@ if option == 'wallstreetbets':
         FROM mention JOIN stock ON stock.id = mention.stock_id
         WHERE date(dt) > current_date - interval '%s day'
         GROUP BY stock_id, symbol   
-        HAVING COUNT(symbol) > 10
+        HAVING COUNT(symbol) > 5
         ORDER BY num_mentions DESC
     """, (num_days,))
 
