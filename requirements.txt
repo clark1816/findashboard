@@ -16,4 +16,4 @@ plotly==5.3.1
 yfinance==0.1.63
 cufflinks==0.17.3
 web3==5.24.0
-TA-Lib==0.4.24
+
