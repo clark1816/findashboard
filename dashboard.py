@@ -43,7 +43,7 @@ if option == 'candle pattern':
                 JOIN stock ON stock.id = daily_bars.stock_id
             ) a 
             WHERE previous_close < previous_open AND close > previous_open AND open < previous_close
-            AND day = '2021-02-18'
+            AND day = '2022-08-05'
         """)
 
     if pattern == 'threebar':
@@ -65,7 +65,7 @@ if option == 'candle pattern':
                 AND volume > previous_volume 
                 AND previous_volume < previous_previous_volume 
                 AND previous_previous_volume < previous_previous_previous_volume 
-                AND day = '2021-02-19'
+                AND day = '2022-08-05'
         """)
 
     rows = cursor.fetchall()
