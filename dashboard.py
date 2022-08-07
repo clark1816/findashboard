@@ -89,7 +89,7 @@ if option == 'twitter':
                         symbol = word[1:]
                         st.write(symbol)
                         st.write(tweet.text)
-                        st.image(f"https://finviz.com/chart.ashx?t={symbol}")
+                        st.image(f"https://www.tradingview.com/chart/9SR9bWql/?symbol={symbol}")
 
 if option == 'company info':
     
