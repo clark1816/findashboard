@@ -71,8 +71,8 @@ if option == 'candle pattern':
     rows = cursor.fetchall()
 
     for row in rows:
-        st.image(f"https://finviz.com/chart.ashx?t={row['symbol']}")
-
+        st.image(f"https://finviz.com/quote.ashx?t={row['symbol']}")
+#https://finviz.com/chart.ashx?t={row['symbol']}
 if option == 'twitter':
     for username in config.TWITTER_USERNAMES:
         user = api.get_user(username)
