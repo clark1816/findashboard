@@ -29,7 +29,7 @@ st.header(option)
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
-        ("bearish engulfing", "bullish engulfing", "threebar")
+        ("bearish engulfing", "bullish engulfing", "bearish threebar")
     )
 
     if pattern == 'bearish engulfing':
@@ -45,26 +45,11 @@ if option == 'candle pattern':
             where dt = (select max(dt) from stock_price) AND engulfing = '100'
         """)
 
-    if pattern == 'threebar':
+    if pattern == 'bearish threebar':
         cursor.execute("""
-            SELECT * 
-            FROM ( 
-                SELECT day, close, volume, stock_id, symbol, 
-                LAG(close, 1) OVER ( PARTITION BY stock_id ORDER BY day ) previous_close, 
-                LAG(volume, 1) OVER ( PARTITION BY stock_id ORDER BY day ) previous_volume, 
-                LAG(close, 2) OVER ( PARTITION BY stock_id ORDER BY day ) previous_previous_close, 
-                LAG(volume, 2) OVER ( PARTITION BY stock_id ORDER BY day ) previous_previous_volume, 
-                LAG(close, 3) OVER ( PARTITION BY stock_id ORDER BY day ) previous_previous_previous_close, 
-                LAG(volume, 3) OVER ( PARTITION BY stock_id ORDER BY day ) previous_previous_previous_volume 
-            FROM daily_bars 
-            JOIN stock ON stock.id = daily_bars.stock_id) a 
-            WHERE close > previous_previous_previous_close 
-                AND previous_close < previous_previous_close 
-                AND previous_close < previous_previous_previous_close 
-                AND volume > previous_volume 
-                AND previous_volume < previous_previous_volume 
-                AND previous_previous_volume < previous_previous_previous_volume 
-                AND day = '202-08-05'
+            select symbol, name, three_line, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND three_line = '-100'
         """)
 
     rows = cursor.fetchall()
