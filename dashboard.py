@@ -61,13 +61,13 @@ if option == 'candle pattern':
         cursor.execute("""
             select symbol, name, doji, close, dt
             from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND three_line = '-100'
+            where dt = (select max(dt) from stock_price) AND doji = '-100'
         """)
     if pattern == 'bullish doji':
         cursor.execute("""
             select symbol, name, doji, close, dt
             from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND three_line = '100'
+            where dt = (select max(dt) from stock_price) AND doji = '100'
         """)
     if pattern == '3 White Soldiers':
         cursor.execute("""
