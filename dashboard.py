@@ -31,6 +31,7 @@ if option == 'candle pattern':
         "Which Pattern?",
         ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "doji", "3 White Soldiers")
     )
+    st.sidebar("if there no stocks fit match the query for then none will appear")
 
     if pattern == 'bearish engulfing':
         cursor.execute("""
