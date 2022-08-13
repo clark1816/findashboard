@@ -293,7 +293,7 @@ if option == 'News':
 
     
 if option == 'wallstreetbets':
-    num_days = st.sidebar.slider('Number of days', 1, 30, 30)
+    num_days = st.sidebar.slider('Number of days', 1, 30, 3)
     st.subheader("This pages shows you how many times each of the listed stocks is mentioned in r/wallstreetbets")
     
     cursor.execute("""
