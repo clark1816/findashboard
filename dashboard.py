@@ -29,7 +29,7 @@ st.header(option)
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
-        ("bearish engulfing" "bullish engulfing", "threebar")
+        ("bearish engulfing", "bullish engulfing", "threebar")
     )
 
     if pattern == 'bearish engulfing':
