@@ -29,7 +29,7 @@ st.header(option)
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
-        ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "bearish doji", "bullish doji")
+        ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "bearish doji", "bullish doji", "3 White Soldiers")
     )
 
     if pattern == 'bearish engulfing':
@@ -68,6 +68,12 @@ if option == 'candle pattern':
             select symbol, name, doji, close, dt
             from stock join stock_price on stock_price.stock_id = stock.id
             where dt = (select max(dt) from stock_price) AND three_line = '100'
+        """)
+    if pattern == '3 White Soldiers':
+        cursor.execute("""
+            select symbol, name, wh_soldier, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND wh_soldier = '100'
         """)
 
     rows = cursor.fetchall()
