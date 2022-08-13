@@ -51,6 +51,12 @@ if option == 'candle pattern':
             from stock join stock_price on stock_price.stock_id = stock.id
             where dt = (select max(dt) from stock_price) AND three_line = '-100'
         """)
+    if pattern == 'bullishh threebar':
+        cursor.execute("""
+            select symbol, name, three_line, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND three_line = '100'
+        """)
 
     rows = cursor.fetchall()
 
