@@ -29,21 +29,14 @@ st.header(option)
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
-        ("engulfing", "threebar")
+        ("bearish engulfing", "threebar")
     )
 
-    if pattern == 'engulfing':
+    if pattern == 'bearish engulfing':
         cursor.execute("""
-            SELECT * 
-            FROM ( 
-                SELECT day, open, close, stock_id, symbol, 
-                LAG(close, 1) OVER ( PARTITION BY stock_id ORDER BY day ) previous_close, 
-                LAG(open, 1) OVER ( PARTITION BY stock_id ORDER BY day ) previous_open 
-                FROM daily_bars
-                JOIN stock ON stock.id = daily_bars.stock_id
-            ) a 
-            WHERE previous_close < previous_open AND close > previous_open AND open < previous_close
-            AND day = '2022-08-05'
+            select symbol, name, engulfing, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND engulfing = '-100'
         """)
 
     if pattern == 'threebar':
