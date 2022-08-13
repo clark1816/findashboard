@@ -29,7 +29,7 @@ st.header(option)
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
-        ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike")
+        ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "bearish doji", "bullish doji")
     )
 
     if pattern == 'bearish engulfing':
@@ -54,6 +54,18 @@ if option == 'candle pattern':
     if pattern == 'bullishh threeline strike':
         cursor.execute("""
             select symbol, name, three_line, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND three_line = '100'
+        """)
+    if pattern == 'bearish doji':
+        cursor.execute("""
+            select symbol, name, doji, close, dt
+            from stock join stock_price on stock_price.stock_id = stock.id
+            where dt = (select max(dt) from stock_price) AND three_line = '-100'
+        """)
+    if pattern == 'bullish doji':
+        cursor.execute("""
+            select symbol, name, doji, close, dt
             from stock join stock_price on stock_price.stock_id = stock.id
             where dt = (select max(dt) from stock_price) AND three_line = '100'
         """)
@@ -128,11 +140,7 @@ if option == 'stocktwits':
         st.write(message['created_at'])
         st.write(message['body'])
 
-        
-url = 'https://candle-pattern-app.herokuapp.com/'
-if option == 'pattern':
-    st.write("check out this [link](https://candle-pattern-app.herokuapp.com/)")
-                        
+                               
 
 if option == 'News':
     news_option = st.sidebar.selectbox("What Type of News?", ('Business', 'Technology', 'Covid','Russo-Ukrainian War','Sports', 'Health','World News','US News', 'Entertainment'), 0)
@@ -280,8 +288,7 @@ if option == 'News':
                 #st.markdown(link,unsafe_allow_html=True)
             except:
                 pass
-if option == 'Update WallStreetBetsDB':
-    st.write("updating db")
+
     
 if option == 'wallstreetbets':
     num_days = st.sidebar.slider('Number of days', 1, 30, 30)
