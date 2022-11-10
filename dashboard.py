@@ -11,6 +11,7 @@ import yfinance as yf
 import cufflinks as cf
 from requests_html import HTMLSession
 import psycopg2, psycopg2.extras
+from sklearn import linear_model
 
 #from pygooglenews import GoogleNews
 session = HTMLSession()
@@ -22,10 +23,41 @@ api = tweepy.API(auth)
 connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_HOST"], database=st.secrets["DB_NAME"], user=st.secrets["DB_USER"], password=st.secrets["DB_PASS"])
 cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('wallstreetbets','candle pattern', 'News','twitter', 'stocktwits','company info'),0)
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','wallstreetbets','AI Price Predictor', 'News','twitter', 'stocktwits','company info'),0)
 
-st.header(option)
+if option == 'Home':
+    st.header('Home Page')
+    st.write('Welcome to you new dashboard for investing in stocks. This has everything you need from stock prices, to new, to machine learning models to tell what the stock price is going to be.')
+if option == 'AI Price Predictor':
+    st.header('Stock Price Predictor Using Machine Learing  and Linear Regression')
+    st.image('download.png', caption='based on this heat map it my understanding that the high and low have the closest correlation on price.')
+    ticker = st.text_input('Stock Ticker')
+    period = st.text_input('Valid periods: 1d,5d,1mo,3mo,6mo,1y,2y,5y,10y,ytd,max')
+    interval = st.text_input('Valid intervals: 1m,2m,5m,15m,30m,60m,90m,1h,1d,5d,1wk,1mo,3mo')
+    if interval:
+        
+        bars = yf.download(tickers = ticker,period=period, interval = interval, rounding = True )
+        df = pd.DataFrame(bars)
 
+        st.write(df[['Close', 'Low', 'High']].tail())
+        
+        X = df[['Low', 'High']]
+        y = df['Close']
+
+        regr = linear_model.LinearRegression()
+        regr.fit(X,y)
+
+        print(regr.coef_)
+
+        #print(regr.copy_X)
+        st.header('Input Values to Make Predictions')
+        low_price = st.number_input('Stock Low Price')
+        high_price = st.number_input('Stock High Price')
+        if low_price and high_price:
+            price_prediction = regr.predict([[low_price, high_price]])
+            st.write(f'The anticipated price of the stock given the inputs is {price_prediction}')
+
+    
 if option == 'candle pattern':
     pattern = st.sidebar.selectbox(
         "Which Pattern?",
