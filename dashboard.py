@@ -24,7 +24,8 @@ connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_H
 cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','wallstreetbets','AI Price Predictor', 'News','twitter', 'stocktwits','company info','Inside Trade Golbin'),0)
-
+if option == 'Inside Trade Golbin':
+    st.title("go fuck ur self")
 if option == 'Home':
     st.header('Home Page')
     st.write('Welcome to you new dashboard for investing in stocks. This has everything you need from stock prices, to new, to machine learning models to tell what the stock price is going to be.')
