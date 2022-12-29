@@ -12,6 +12,9 @@ import cufflinks as cf
 from requests_html import HTMLSession
 import psycopg2, psycopg2.extras
 from sklearn import linear_model
+import glob, os
+import csv, zipfile
+import base64
 
 #from pygooglenews import GoogleNews
 session = HTMLSession()
@@ -23,9 +26,47 @@ api = tweepy.API(auth)
 connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_HOST"], database=st.secrets["DB_NAME"], user=st.secrets["DB_USER"], password=st.secrets["DB_PASS"])
 cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-option = st.sidebar.selectbox("Which Dashboard?", ('Home','wallstreetbets','AI Price Predictor', 'News','twitter', 'stocktwits','company info','Inside Trade Golbin'),0)
-if option == 'Inside Trade Golbin':
-    st.title("go fuck ur self")
+option = st.sidebar.selectbox("Which Dashboard?", ('Home','wallstreetbets','AI Price Predictor','Insider Stock Tracker', 'News','twitter', 'stocktwits','company info','Inside Trade Golbin'),0)
+if option == 'Insider Stock Tracker':
+    st.sidebar.title('Insider Stock Tracker')
+    #create a sidebar where you can select the house of representatives member you want to track
+    st.sidebar.subheader('Select a House of representatives member')
+    congressperson = st.sidebar.selectbox('House members', ['Pelosi', 'Mast', 'Crenshaw', 'Rouzer', 'McKinley', 'Welch', 'Dingell'])
+
+    st.title('Inside Trade Golbin Tracker')
+    zip_file_url = 'https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2022FD.ZIP'
+
+    r = requests.get(zip_file_url)
+    zipfile_name = '2022.ZIP'
+    with open(zipfile_name, 'wb') as f:
+        f.write(r.content)
+
+    with zipfile.ZipFile(zipfile_name, 'r') as z:
+        z.extractall('results')\
+
+    with open('results/2022FD.txt') as f:
+        for line in csv.reader(f, delimiter='\t'):
+            if line[1] == congressperson:
+                date = line[7]
+                doc_id = line[8]
+                doc_url = f'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2022/{doc_id}.pdf'
+                print(doc_url)
+                r = requests.get(doc_url)
+
+                with open(f'results/{doc_id}.pdf', 'wb') as pdf_file:
+                    pdf_file.write(r.content)
+
+                with open(f'results/{doc_id}.pdf',"rb") as f:
+                    base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+
+                    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="800" type="application/pdf"></iframe>'
+
+                    st.markdown(pdf_display, unsafe_allow_html=True)
+
+
+    for file in glob.glob('results/*.pdf'):
+        os.remove(file)
+
 if option == 'Home':
     st.header('Home Page')
     st.write('Welcome to you new dashboard for investing in stocks. This has everything you need from stock prices, to new, to machine learning models to tell what the stock price is going to be.')
