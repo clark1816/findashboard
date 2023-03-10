@@ -23,8 +23,8 @@ auth = tweepy.OAuthHandler(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_
 auth.set_access_token(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_HOST"], database=st.secrets["DB_NAME"], user=st.secrets["DB_USER"], password=st.secrets["DB_PASS"])
-cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#connection = psycopg2.connect(port = st.secrets["DB_PORT"],host=st.secrets["DB_HOST"], database=st.secrets["DB_NAME"], user=st.secrets["DB_USER"], password=st.secrets["DB_PASS"])
+#cursor = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 option = st.sidebar.selectbox("Which Dashboard?", ('Home','AI Price Predictor','Insider Stock Tracker', 'News','twitter', 'stocktwits','company info','Inside Trade Golbin'),0)
 if option == 'Insider Stock Tracker':
@@ -34,7 +34,7 @@ if option == 'Insider Stock Tracker':
     congressperson = st.sidebar.selectbox('House members', ['Pelosi', 'Mast', 'Crenshaw', 'Rouzer', 'McKinley', 'Welch', 'Dingell'])
 
     st.title('Inside Trade Golbin Tracker')
-    zip_file_url = 'https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2022FD.ZIP'
+    zip_file_url = 'https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2023FD.ZIP'
 
     r = requests.get(zip_file_url)
     zipfile_name = '2022.ZIP'
@@ -44,12 +44,12 @@ if option == 'Insider Stock Tracker':
     with zipfile.ZipFile(zipfile_name, 'r') as z:
         z.extractall('results')\
 
-    with open('results/2022FD.txt') as f:
+    with open('results/2023FD.txt') as f:
         for line in csv.reader(f, delimiter='\t'):
             if line[1] == congressperson:
                 date = line[7]
                 doc_id = line[8]
-                doc_url = f'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2022/{doc_id}.pdf'
+                doc_url = f'https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2023/{doc_id}.pdf'
                 print(doc_url)
                 r = requests.get(doc_url)
 
@@ -100,74 +100,74 @@ if option == 'AI Price Predictor':
             st.write(f'The anticipated price of the stock given the inputs is {price_prediction}')
 
     
-if option == 'candle pattern':
-    pattern = st.sidebar.selectbox(
-        "Which Pattern?",
-        ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "doji", "3 White Soldiers")
-    )
+# if option == 'candle pattern':
+#     pattern = st.sidebar.selectbox(
+#         "Which Pattern?",
+#         ("bearish engulfing", "bullish engulfing", "bearish threeline strike", "bullishh threeline strike", "doji", "3 White Soldiers")
+#     )
     
 
-    if pattern == 'bearish engulfing':
-        cursor.execute("""
-            select symbol, name, engulfing, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND engulfing = '-100'
-        """)
-    if pattern == 'bullish engulfing':
-        cursor.execute("""
-            select symbol, name, engulfing, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND engulfing = '100'
-        """)
+#     if pattern == 'bearish engulfing':
+#         cursor.execute("""
+#             select symbol, name, engulfing, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND engulfing = '-100'
+#         """)
+#     if pattern == 'bullish engulfing':
+#         cursor.execute("""
+#             select symbol, name, engulfing, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND engulfing = '100'
+#         """)
 
-    if pattern == 'bearish threeline strike':
-        cursor.execute("""
-            select symbol, name, three_line, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND three_line = '-100'
-        """)
-    if pattern == 'bullishh threeline strike':
-        cursor.execute("""
-            select symbol, name, three_line, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND three_line = '100'
-        """)
+#     if pattern == 'bearish threeline strike':
+#         cursor.execute("""
+#             select symbol, name, three_line, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND three_line = '-100'
+#         """)
+#     if pattern == 'bullishh threeline strike':
+#         cursor.execute("""
+#             select symbol, name, three_line, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND three_line = '100'
+#         """)
    
-    if pattern == 'doji':
-        cursor.execute("""
-            select symbol, name, doji, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND doji = '100'
-        """)
-    if pattern == '3 White Soldiers':
-        cursor.execute("""
-            select symbol, name, wh_soldier, close, dt
-            from stock join stock_price on stock_price.stock_id = stock.id
-            where dt = (select max(dt) from stock_price) AND wh_soldier = '100'
-        """)
+#     if pattern == 'doji':
+#         cursor.execute("""
+#             select symbol, name, doji, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND doji = '100'
+#         """)
+#     if pattern == '3 White Soldiers':
+#         cursor.execute("""
+#             select symbol, name, wh_soldier, close, dt
+#             from stock join stock_price on stock_price.stock_id = stock.id
+#             where dt = (select max(dt) from stock_price) AND wh_soldier = '100'
+#         """)
 
-    rows = cursor.fetchall()
+#     rows = cursor.fetchall()
 
-    for row in rows:
-        st.image(f"https://finviz.com/chart.ashx?t={row['symbol']}")
-#https://finviz.com/chart.ashx?t={row['symbol']}
-if option == 'twitter':
-    for username in config.TWITTER_USERNAMES:
-        user = api.get_user(username)
-        tweets = api.user_timeline(username)
+#     for row in rows:
+#         st.image(f"https://finviz.com/chart.ashx?t={row['symbol']}")
+# #https://finviz.com/chart.ashx?t={row['symbol']}
+# if option == 'twitter':
+#     for username in config.TWITTER_USERNAMES:
+#         user = api.get_user(username)
+#         tweets = api.user_timeline(username)
 
-        st.subheader(username)
-        st.image(user.profile_image_url)
+#         st.subheader(username)
+#         st.image(user.profile_image_url)
         
-        for tweet in tweets:
-            if '$' in tweet.text:
-                words = tweet.text.split(' ')
-                for word in words:
-                    if word.startswith('$') and word[1:].isalpha():
-                        symbol = word[1:]
-                        st.write(symbol)
-                        st.write(tweet.text)
-                        st.image(f"https://finviz.com/chart.ashx?t={symbol}")
+#         for tweet in tweets:
+#             if '$' in tweet.text:
+#                 words = tweet.text.split(' ')
+#                 for word in words:
+#                     if word.startswith('$') and word[1:].isalpha():
+#                         symbol = word[1:]
+#                         st.write(symbol)
+#                         st.write(tweet.text)
+#                         st.image(f"https://finviz.com/chart.ashx?t={symbol}")
 
 if option == 'company info':
     
@@ -366,38 +366,38 @@ if option == 'News':
                 pass
 
     
-if option == 'wallstreetbets':
-    num_days = st.sidebar.slider('Number of days', 1, 30, 3)
-    st.subheader("This pages shows you how many times each of the listed stocks is mentioned in r/wallstreetbets")
+# if option == 'wallstreetbets':
+#     num_days = st.sidebar.slider('Number of days', 1, 30, 3)
+#     st.subheader("This pages shows you how many times each of the listed stocks is mentioned in r/wallstreetbets")
     
-    cursor.execute("""
-        SELECT COUNT(*) AS num_mentions, symbol
-        FROM mention JOIN stock ON stock.id = mention.stock_id
-        WHERE date(dt) > current_date - interval '%s day'
-        GROUP BY stock_id, symbol   
-        HAVING COUNT(symbol) > 3
-        ORDER BY num_mentions DESC
-    """, (num_days,))
+#     cursor.execute("""
+#         SELECT COUNT(*) AS num_mentions, symbol
+#         FROM mention JOIN stock ON stock.id = mention.stock_id
+#         WHERE date(dt) > current_date - interval '%s day'
+#         GROUP BY stock_id, symbol   
+#         HAVING COUNT(symbol) > 3
+#         ORDER BY num_mentions DESC
+#     """, (num_days,))
 
-    counts = cursor.fetchall()
-    for count in counts:
-        st.write(count)
+#     counts = cursor.fetchall()
+#     for count in counts:
+#         st.write(count)
     
-    cursor.execute("""
-        SELECT symbol, message, url, dt
-        FROM mention JOIN stock ON stock.id = mention.stock_id
-        ORDER BY dt DESC
-        LIMIT 100
-    """)
+#     cursor.execute("""
+#         SELECT symbol, message, url, dt
+#         FROM mention JOIN stock ON stock.id = mention.stock_id
+#         ORDER BY dt DESC
+#         LIMIT 100
+#     """)
 
-    mentions = cursor.fetchall()
-    for mention in mentions:
-        st.text(mention['dt'])
-        st.text(mention['symbol'])
-        st.text(mention['message'])
-        st.text(mention['url'])
-        #st.text(mention['username'])
+#     mentions = cursor.fetchall()
+#     for mention in mentions:
+#         st.text(mention['dt'])
+#         st.text(mention['symbol'])
+#         st.text(mention['message'])
+#         st.text(mention['url'])
+#         #st.text(mention['username'])
 
-    rows = cursor.fetchall()
+#     rows = cursor.fetchall()
 
-    st.write(rows)
+#     st.write(rows)
